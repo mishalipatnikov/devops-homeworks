@@ -1,0 +1,94 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  become_user: root
+  handlers:
+    - name: Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+
+    - name: Restart Vector
+      become: true
+      ansible.builtin.service:
+         name: vector
+         state: restarted
+   
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    - name: Install clickhouse
+      apt:
+        name: "{{ item }}" #={{ clickhouse_version }}"
+        state: present
+      loop: "{{ clickhouse_packages }}"
+
+#  tasks:
+#    - block:
+#        - name: Get clickhouse distrib
+#          ansible.builtin.get_url:
+#            url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+#            dest: "./{{ item }}-{{ clickhouse_version }}.rpm"
+#          with_items: "{{ clickhouse_packages }}"
+#      rescue:
+#        - name: Get clickhouse distrib static
+#          ansible.builtin.get_url:
+#            url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+#            dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
+#    - name: Install clickhouse packages
+#      become: true
+#      ansible.builtin.yum:
+##        name:
+#          - clickhouse-common-static-{{ clickhouse_version }}.rpm
+#          - clickhouse-client-{{ clickhouse_version }}.rpm
+#          - clickhouse-server-{{ clickhouse_version }}.rpm
+#      notify: Start clickhouse service
+#    - name: Flush handlers
+#      meta: flush_handlers
+
+    - name: Create database
+      command: 
+        cmd: "clickhouse-client -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc !=82
+      changed_when: create_db.rc == 0
+
+
+- name: Install Vector
+  hosts: clickhouse
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  become_user: root
+  handlers:
+    - name: Start vector
+      become: true
+      ansible.builtin.service:
+        name: vector
+        state: restarted
+  tasks:
+    - name: Download Vector setup script
+      get_url:
+        url: https://setup.vector.dev
+        dest: /tmp/vector_setup.sh
+
+    - name: Run Vector setup script
+      shell: bash /tmp/vector_setup.sh
+      args:
+        warn: false
+
+    - name: Install vector
+      apt:
+        name: "vector" #={{ vector_version }}"
+        state: present
+      become: true
+    - name: Configure Vector
+      template:
+        src: vector.yaml.j2
+        dest: /etc/vector/vector.yaml
+      notify: Start Vector
