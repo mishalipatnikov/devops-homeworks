@@ -1,9 +1,7 @@
 ### Скриншоты
-1. `ansible-lint site.yml`  
-![01](./ansible-lint.png)
-2. `ansible-playbook -i inventory/prod.yml site.yml --check`  
+1. `ansible-playbook -i inventory/prod.yml site.yml --check`  
 ![02](./ansible-check.png)
-3. `ansible-playbook -i inventory/prod.yml site.yml --diff` 
+2. `ansible-playbook -i inventory/prod.yml site.yml --diff` 
 ![03](./ansible-diff.png)
 
 ### Описание  
