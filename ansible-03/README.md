@@ -1,8 +1,8 @@
 ### Скриншоты
 1. `ansible-playbook -i inventory/prod.yml site.yml --check`  
-![02](./ansible-check.png)
+![02](./ansible_check-03.png)
 2. `ansible-playbook -i inventory/prod.yml site.yml --diff` 
-![03](./ansible-diff.png)
+![03](./ansible_diff-03.png)
 
 ### Описание  
 1. Тут же добавил папку для терраформа, чтобы руками не создавать ВМ. Создаются отдельный хост под каждое приложение, всего их три.
