@@ -1,0 +1,39 @@
+---
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - git
+          - nginx..
+        state: present
+        update_cache: yes
+
+    - name: Clone Lighthouse repository
+      git:
+        repo: https://github.com/VKCOM/lighthouse.git
+        dest: /var/www/lighthouse..
+
+    - name: Configure Nginx to serve Lighthouse
+      copy:
+        dest: /etc/nginx/sites-available/lighthouse
+        content:.
+          server {
+              listen 80;
+              {{ ansible_host }};..
+
+              location / {
+                  root /var/www/lighthouse;
+                  index index.html;
+                  try_files $uri $uri/ =404;
+              }
+          }
+
+    - name: Enable Lighthouse site in Nginx
+      command: nginx -s reload
+      notify:
+        - Restart Nginx
+
+    - name: Remove default Nginx configuration
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
