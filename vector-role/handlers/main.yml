@@ -1,7 +1,0 @@
----
-  handlers:
-    - name: Start Vector
-      become: true
-      ansible.builtin.service:
-        name: vector
-        state: restarted
