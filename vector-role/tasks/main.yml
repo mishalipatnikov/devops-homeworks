@@ -1,0 +1,23 @@
+---
+  tasks:
+    - name: Download Vector setup script
+      get_url:
+        url: https://setup.vector.dev
+        dest: /etc/vector_setup.sh
+
+    - name: Run Vector setup script
+      shell: bash /etc/vector_setup.sh
+      args:
+        warn: false
+
+    - name: Install vector
+      apt:
+        name: "vector" #={{ vector_version }}"
+        state: present
+      become: true
+    - name: Configure Vector
+      template:
+        src: vector.yaml.j2
+        dest: /etc/vector/vector.yaml
+      notify: Start Vector
+
