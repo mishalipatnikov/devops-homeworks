@@ -1,8 +1,8 @@
 ### Скриншоты
 1. Схема workflow для багов    
-![bug](./bug_worflow.png)  
+![bug](./bug_workflow.png)  
 2. Схема workflow для остальных задач   
-![tasks](./tasks_worflow.png)  
+![tasks](./tasks_workflow.png)  
 3. Задача с багами в канбан  
 ![bug](./bug.png)  
 4. Задача с epic в канбан  
