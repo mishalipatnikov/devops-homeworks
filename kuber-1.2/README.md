@@ -13,7 +13,7 @@
 2. Получил ip pod 
 `kubectl get pod -o wide`
 3. Вывел страницу nginx  
-[curl](./curl.png)  
+![curl](./curl.png)  
 
 ### Задание 2. Создать Service и подключить его к Pod
 
@@ -26,9 +26,9 @@
 
 1. Создал новый [pod](./pod.yaml) и [service](./service.yaml), подключил сервис к поду, пробросил порт  
 ` kubectl port-forward svc/netology-svc 8080:80 &`  
-[web](./web.png)
+![web](./web.png)
 2. Список pods и svc
-[pods](./pods.png)
+![pods](./pods.png)
 
 ### Правила приёма работы
 
