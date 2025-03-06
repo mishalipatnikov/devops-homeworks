@@ -27,7 +27,7 @@
 1. Создал новый [pod](./pod.yaml) и [service](./service.yaml), подключил сервис к поду, пробросил порт  
 ` kubectl port-forward svc/netology-svc 8080:80 &`  
 ![web](./web.png)
-2. Список pods и svc
+2. Список pods и svc  
 ![pods](./pods.png)
 
 ### Правила приёма работы
