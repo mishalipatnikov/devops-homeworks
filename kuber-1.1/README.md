@@ -82,7 +82,7 @@
 ------
 
 
-![dashboard](./dashboadr.png)
+![dashboard](./dashboard.png)
 ![nodes](./nodes.png)
 
 ### Критерии оценки
