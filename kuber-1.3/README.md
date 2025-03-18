@@ -37,13 +37,13 @@
 До масштабирования  
 ![pods](./pods.png)  
 После масштабирования  
-![scale pods](./scale_pods.png)  
+![scale pods](./scaled_pods.png)  
 3. Создал [multitool](./multitool.yaml), доступ до deployment  
 ![curl](./curl.png)
 
 ### Задание 2
 1. [deployment-init.yaml](./deployment-init.yaml) 
 2. pod до создания сервиса  
-![wait](./wait.png)
-3. pod после создания сервиса
+![wait](./wait.png)  
+3. pod после создания сервиса  
 ![run](./run.png)
